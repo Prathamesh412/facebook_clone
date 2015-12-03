@@ -11,6 +11,7 @@ var app = express();
 
 var userController = require('./controllers/user');
 var homeController = require('./controllers/home');
+var pageController = require('./controllers/page');
 
 mongoose.connect("mongodb://localhost:27017/socialfly");
 mongoose.connection.on('error',function(){
@@ -67,8 +68,18 @@ app.get('/profile/:username',userController.getProfile)
 app.get('/requests/:username',userController.isLogin, userController.getSendFriendsRequest);
 app.get('/requests/:username/accept',userController.isLogin, userController.getAcceptFriendsRequest);
 app.get('/requests/:username/reject',userController.isLogin, userController.getRejectFriendsRequest);
-app.listen('3000', function(){
-  console.log("Server at port 3000");
+
+app.get('/page/new', pageController.getPage);
+app.post('/page/new',pageController.postPage);
+app.get('/page/:pageName',pageController.getSinglePage);
+app.get('/page/:pageName/edit', pageController.getEditPage);
+app.post('/page/:pageName/edit',pageController.postEditPage);
+app.get('/page/:pageName/remove', pageController.removePage);
+app.post('/page/:pageName/adduser',pageController.getModerator);
+app.post('/page/:pageName/addeditor',pageController.getEditor);
+
+app.listen('5000', function(){
+  console.log("Server at port 5000");
 });
 
 

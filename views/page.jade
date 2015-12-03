@@ -1,0 +1,23 @@
+block content
+  h1 Page
+  p #{page.pageName}  
+  p #{page.description}
+  if(isAdmin)
+      a.btn.btn-primary(href="/page/#{page.pageName}/edit") Edit the page
+      br
+      br
+      a.btn.btn-primary(href="/page/#{page.pageName}/remove") Delete
+      br
+      br
+      form(method="POST" action="/page/#{page.pageName}/adduser")
+        select(name="mod")
+          each user in users
+            option(value="#{user._id}") #{user.username}
+        input(type="submit" name="Submit")
+      br
+      br
+      form(method="POST" action="/page/#{page.pageName}/addeditor")
+        select(name="editor")
+          each user in users
+            option(value="#{user._id}") #{user.username}
+        input(type="submit" name="Submit")
